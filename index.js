@@ -5,7 +5,7 @@
 const filmingLocations = require('./lieux-de-tournage-a-paris.json')
 
 console.log('🚀 It Works!');
-console.log(filmingLocations)
+
 
 /**
  * 💅 Try to produce the most readable code, use meaningful variable names
@@ -25,17 +25,18 @@ console.log(`There is ${getFilmingLocationsNumber()} filming locations in Paris`
 // 1. Implement the function
 // 2. Log the first and last item in array
 function sortFilmingLocationsByStartDate () {
-	return ''
+	return filmingLocations.sort(function(a,b){return new Date(a.fields.date_debut) - new Date(b.fields.date_debut)})
 }
-console.log(``)
+//console.log(sortFilmingLocationsByStartDate())
 
 // 📝 TODO: Number of filming locations in 2020 only
 // 1. Make the function return the number of filming locations in 2020 only
 // 2. Log the result
 function getFilmingLocationsNumber2020 () {
-	return ''
+	return filmingLocations.filter(filmingLocations => filmingLocations.fields.date_debut.includes('2020')||filmingLocations.fields.date_fin.includes('2020'))
 }
-console.log()
+//console.log(getFilmingLocationsNumber2020())
+console.log(getFilmingLocationsNumber2020().length)
 
 // 📝 TODO: Number of filming locations per year
 // 1. Implement the function, the expected result is an object with years as
@@ -45,10 +46,17 @@ console.log()
 //      '2021': 1234,
 //    }
 // 2. Log the result
+
 function getFilmingLocationsNumberPerYear () {
-	return {}
+	return {
+		filmingLocation.groupBy(fields.date_debut => {
+			return fields.date_debut;
+		});
+	}
 }
-console.log()
+console.log(getFilmingLocationsNumberPerYear)
+
+
 
 // 📝 TODO: Number of filming locations by district (arrondissement)
 // 1. Implement the function, the expected result is an object with
@@ -58,15 +66,20 @@ console.log()
 //      '75014': 1234,
 //    }
 // 2. Log the result
-function getFilmingLocationsNumberPerDistrict () {
-	return {}
+function getFilmingLocationsNumberPerDistrict() {
+	return {
+
+	}
 }
-console.log()
+console.log(getFilmingLocationsNumberPerDistrict())
 
 // 📝 TODO: Number of locations per film, sorted in descending order
 // 1. Implement the function, result expected as an array of object like:
 //    const result = [{film: 'LRDM - Patriot season 2', locations: 12}, {...}]
 // 2. Log the first and last item of the array
+
+// sort descending : arr.sort((a, b) => b - a);
+
 function getFilmLocationsByFilm () {
 	return []
 }
