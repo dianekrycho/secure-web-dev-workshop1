@@ -16,8 +16,7 @@ console.log(filmingLocations)
 // 📝 TODO: Number of filming locations
 // 1. Make the function return the number of filming locations
 function getFilmingLocationsNumber () {
-	number = filmingLocations.count(${filmingLocations.fields})
-	return number
+	return filmingLocations.length
 	//Object.keys(filmingLocations.fields).length;
 }
 console.log(`There is ${getFilmingLocationsNumber()} filming locations in Paris`)
