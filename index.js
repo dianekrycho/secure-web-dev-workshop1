@@ -5,6 +5,7 @@
 const filmingLocations = require('./lieux-de-tournage-a-paris.json')
 
 console.log('🚀 It Works!');
+console.log(filmingLocations)
 
 /**
  * 💅 Try to produce the most readable code, use meaningful variable names
@@ -15,7 +16,9 @@ console.log('🚀 It Works!');
 // 📝 TODO: Number of filming locations
 // 1. Make the function return the number of filming locations
 function getFilmingLocationsNumber () {
-	return ''
+	number = filmingLocations.count(${filmingLocations.fields})
+	return number
+	//Object.keys(filmingLocations.fields).length;
 }
 console.log(`There is ${getFilmingLocationsNumber()} filming locations in Paris`)
 
