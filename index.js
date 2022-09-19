@@ -27,16 +27,16 @@ console.log(`There is ${getFilmingLocationsNumber()} filming locations in Paris`
 function sortFilmingLocationsByStartDate () {
 	return filmingLocations.sort(function(a,b){return new Date(a.fields.date_debut) - new Date(b.fields.date_debut)})
 }
-//console.log(sortFilmingLocationsByStartDate())
+console.log(sortFilmingLocationsByStartDate())
 
 // 📝 TODO: Number of filming locations in 2020 only
 // 1. Make the function return the number of filming locations in 2020 only
 // 2. Log the result
 function getFilmingLocationsNumber2020 () {
-	return filmingLocations.filter(filmingLocations => filmingLocations.fields.date_debut.includes('2020')||filmingLocations.fields.date_fin.includes('2020'))
+	return filmingLocations.filter(filmingLocations => filmingLocations.fields.date_debut.includes('2020')||filmingLocations.fields.date_fin.includes('2020')).length
 }
 //console.log(getFilmingLocationsNumber2020())
-console.log(getFilmingLocationsNumber2020().length)
+console.log(`There is ${getFilmingLocationsNumber2020()} filming locations in 2020 in Paris`)
 
 // 📝 TODO: Number of filming locations per year
 // 1. Implement the function, the expected result is an object with years as
@@ -48,14 +48,18 @@ console.log(getFilmingLocationsNumber2020().length)
 // 2. Log the result
 
 function getFilmingLocationsNumberPerYear () {
-	return {
-		filmingLocation.groupBy(fields.date_debut => {
-			return fields.date_debut;
-		});
+	let film_per_year = {}
+	for(const film in filmingLocations){
+		let year = filmingLocations[film].fields.annee_tournage;
+		if(!(year in film_per_year)){
+			film_per_year[year]=0;
+		}
+		film_per_year[year]+=1;
 	}
+	return (film_per_year)
 }
-console.log(getFilmingLocationsNumberPerYear)
 
+console.log(getFilmingLocationsNumberPerYear())
 
 
 // 📝 TODO: Number of filming locations by district (arrondissement)
@@ -67,11 +71,18 @@ console.log(getFilmingLocationsNumberPerYear)
 //    }
 // 2. Log the result
 function getFilmingLocationsNumberPerDistrict() {
-	return {
-
+	let film_per_district = {}
+	for(const film in filmingLocations){
+		let district = filmingLocations[film].fields.ardt_lieu;
+		if(!(district in film_per_district)){
+			film_per_district[district]=0;
+		}
+		film_per_district[district]+=1;
 	}
+	return (film_per_district)
 }
 console.log(getFilmingLocationsNumberPerDistrict())
+
 
 // 📝 TODO: Number of locations per film, sorted in descending order
 // 1. Implement the function, result expected as an array of object like:
