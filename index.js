@@ -27,7 +27,7 @@ console.log(`There is ${getFilmingLocationsNumber()} filming locations in Paris`
 function sortFilmingLocationsByStartDate () {
 	return filmingLocations.sort(function(a,b){return new Date(a.fields.date_debut) - new Date(b.fields.date_debut)})
 }
-console.log(sortFilmingLocationsByStartDate())
+//console.log(sortFilmingLocationsByStartDate())
 
 // 📝 TODO: Number of filming locations in 2020 only
 // 1. Make the function return the number of filming locations in 2020 only
@@ -91,24 +91,41 @@ console.log(getFilmingLocationsNumberPerDistrict())
 
 // sort descending : arr.sort((a, b) => b - a);
 
-function getFilmLocationsByFilm () {
-	return []
+function getFilmLocationsByFilm() {
+	const location_per_film = {}
+	for(const location in filmingLocations) {
+		let film = filmingLocations[location].fields.nom_tournage
+		if (!(film in location_per_film)){
+			location_per_film[film] = 0
+		}
+		location_per_film[film] += 1
+	}
+	return location_per_film
 }
-console.log()
+console.log(getFilmLocationsByFilm())
 
 // 📝 TODO: Number of different films
 // 1. Implement the function
 // 2. Log the result
 function getNumberOfFilms() {
-	return ''
+	return Object.keys(getFilmLocationsByFilm()).length
 }
+console.log(`there are ${getNumberOfFilms()} films \n`)
 
 // 📝 TODO: All the filming locations of `LRDM - Patriot season 2`
 // 1. Return an array with all filming locations of LRDM - Patriot season 2
 // 2. Log the result
-function getArseneFilmingLocations () {
-	return []
+function getArseneFilmingLocations() {
+	let LRDMLocations = []
+	for(const location of filmingLocations) {
+		if(location.fields.nom_tournage ==`LRDM - Patriot season 2`){
+			LRDMLocations.push(location.fields.adresse_lieu)
+		}
+	}
+	return LRDMLocations
 }
+console.log(`lieux de tournage LRDM : \n ${getArseneFilmingLocations()} \n`)
+
 
 // 📝 TODO: Tous les arrondissement des lieux de tournage de nos films favoris
 //  (favoriteFilms)
@@ -117,14 +134,29 @@ function getArseneFilmingLocations () {
 //    const films = { 'LRDM - Patriot season 2': ['75013'] }
 // 2. Log the result
 function getFavoriteFilmsLocations (favoriteFilmsNames) {
-	return []
+	let locations = []
+	for(const location of filmingLocations) {
+		if(location.fields.nom_tournage ==favoriteFilmsNames){
+			if(locations.indexOf(location.fields.ardt_lieu)==-1){
+				locations.push(location.fields.ardt_lieu)
+			}
+		}
+	}
+	locations.sort(function(a,b){return a - b})
+	return locations
 }
+
 const favoriteFilms =
 	[
 		'LRDM - Patriot season 2',
 		'Alice NEVERS',
 		'Emily in Paris',
 	]
+
+for (let film of favoriteFilms){
+	console.log(`lieux de tournage de ${film} : ${getFavoriteFilmsLocations(film)}\n`)
+}
+
 
 // 📝 TODO: All filming locations for each film
 //     e.g. :
@@ -133,23 +165,51 @@ const favoriteFilms =
 //        'Une jeune fille qui va bien': [{...}]
 //     }
 function getFilmingLocationsPerFilm () {
-	return { }
+	const location_per_film = {}
+	for(const location of filmingLocations) {
+		let film = location.fields.nom_tournage
+		if (!(film in location_per_film)){
+			location_per_film[film] = []
+		}
+		location_per_film[film].push(location.fields.adresse_lieu)
+	}
+	return location_per_film
 }
+
+console.log(getFilmingLocationsPerFilm())
 
 // 📝 TODO: Count each type of film (Long métrage, Série TV, etc...)
 // 1. Implement the function
 // 2. Log the result
 function countFilmingTypes () {
-	return {}
+	const number_per_type = {}
+	for(const location in filmingLocations) {
+
+		let type = filmingLocations[location].fields.type_tournage
+		if (!(type in number_per_type)) {
+			number_per_type[type] = 0
+		}
+		number_per_type[type] += 1
+
+	}
+	return number_per_type
 }
+console.log(countFilmingTypes())
 
 // 📝 TODO: Sort each type of filming by count, from highest to lowest
 // 1. Implement the function. It should return a sorted array of objects like:
 //    [{type: 'Long métrage', count: 1234}, {...}]
 // 2. Log the result
 function sortedCountFilmingTypes () {
-	return []
+	const dict =  countFilmingTypes()
+	const result =[]
+	for (const filmType of Object.keys(dict)) {
+		result.push({'type':filmType, 'count' : dict[filmType]})
+	}
+	result.sort(function(a,b){return b.count - a.count})
+	return result
 }
+console.log(sortedCountFilmingTypes())
 
 /**
  * This arrow functions takes a duration in milliseconds and returns a
