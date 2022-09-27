@@ -176,21 +176,24 @@ function getFilmingLocationsPerFilm () {
 	return location_per_film
 }
 
-console.log(getFilmingLocationsPerFilm())
+//console.log(getFilmingLocationsPerFilm())
 
 // 📝 TODO: Count each type of film (Long métrage, Série TV, etc...)
 // 1. Implement the function
 // 2. Log the result
-function countFilmingTypes () {
+function countFilmingTypes() {
 	const number_per_type = {}
+	const films = []
 	for(const location in filmingLocations) {
-
 		let type = filmingLocations[location].fields.type_tournage
+		let nomFilm = filmingLocations[location].fields.nom_tournage
 		if (!(type in number_per_type)) {
 			number_per_type[type] = 0
 		}
-		number_per_type[type] += 1
-
+		if (!films.includes(nomFilm)) {
+			films.push(nomFilm)
+			number_per_type[type] += 1
+		}
 	}
 	return number_per_type
 }
